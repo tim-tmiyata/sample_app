@@ -7,9 +7,9 @@ Style/HashTransformKeys:
 Style/HashTransformValues:
   Enabled: true
 Style/Documentation:
-  Enabled: true
+  Enabled: false
 Style/AsciiComments:
-  Enabled: true
+  Enabled: false
 Layout/SpaceAroundMethodCallOperator:
   Enabled: true
 Lint/RaiseException:

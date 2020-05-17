@@ -22,6 +22,7 @@ class UsersEditTest < ActionDispatch::IntegrationTest
 
   test 'successful edit with friendly forwarding' do
     get edit_user_path(@user)
+    assert_equal session[:forwarding_url], edit_user_url(@user)
     log_in_as(@user)
     assert_redirected_to edit_user_url(@user)
     name  = 'Foo Bar'
@@ -35,6 +36,18 @@ class UsersEditTest < ActionDispatch::IntegrationTest
     @user.reload
     assert_equal name,  @user.name
     assert_equal email, @user.email
+  end
+
+  test '2回目のログイン時は編集画面に遷移するか' do
+    get edit_user_path(@user)
+    assert_equal session[:forwarding_url], edit_user_url(@user)
+    log_in_as(@user)
+    assert_redirected_to edit_user_url(@user)
+    delete logout_path
+    get login_path
+    assert_nil session[:forwarding_url]
+    log_in_as(@user)
+    assert_redirected_to @user
   end
 
   test 'should redirect edit when not logged in' do

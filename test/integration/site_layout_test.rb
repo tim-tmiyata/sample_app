@@ -15,4 +15,19 @@ class SiteLayoutTest < ActionDispatch::IntegrationTest
     get signup_path
     assert_select 'title', full_title('Sign up')
   end
+
+  test 'header link (not log in)' do
+    get root_path
+    assert_select 'a[href=?]', login_path
+  end
+
+  test 'header link (log in)' do
+    user = users(:michael)
+    log_in_as(user)
+    get root_path
+    assert_select 'a[href=?]', users_path
+    assert_select 'a[href=?]', user_path(user)
+    assert_select 'a[href=?]', edit_user_path(user)
+    assert_select 'a[href=?]', logout_path
+  end
 end

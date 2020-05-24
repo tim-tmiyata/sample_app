@@ -51,6 +51,11 @@ class User < ApplicationRecord
     update_attribute(:activated_at, Time.zone.now)
   end
 
+  # 有効化用のメールを送信する
+  def send_activation_email
+    UserMailer.account_activation(self).deliver_now
+  end
+
   private
 
   # 有効化トークンとダイジェストを作成および代入する

@@ -45,6 +45,12 @@ class User < ApplicationRecord
     update_attribute(:remember_digest, nil)
   end
 
+  # アカウントを有効にする
+  def activate
+    update_attribute(:activated,    true)
+    update_attribute(:activated_at, Time.zone.now)
+  end
+
   private
 
   # 有効化トークンとダイジェストを作成および代入する
